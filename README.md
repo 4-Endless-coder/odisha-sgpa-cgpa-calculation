@@ -21,7 +21,9 @@
   <img src="https://img.shields.io/badge/React_Hook_Form-EC5990?style=for-the-badge&logo=react-hook-form&logoColor=white" alt="React Hook Form Badge" />
   <img src="https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white" alt="Zod Badge" />
 </p>
-
+<p align="center">
+  <a href="https://odisha-sgpa-cgpa-calculation.vercel.app/" target="_blank"><strong>🚀 View Live Demo 🚀</strong></a>
+</p>
 </div>
 
 ---
