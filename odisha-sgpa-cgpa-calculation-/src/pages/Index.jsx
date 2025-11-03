@@ -90,7 +90,7 @@ const Index = () => {
               const email = formData.get('email');
               const message = formData.get('message');
               
-              const mailtoLink = `mailto:support@example.com?subject=Contact from ${name}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+              const mailtoLink = `mailto:YOUR_EMAIL@example.com?subject=Contact from ${name}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
               window.location.href = mailtoLink;
               
               e.currentTarget.reset();
