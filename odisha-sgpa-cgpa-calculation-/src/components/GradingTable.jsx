@@ -1,6 +1,7 @@
 import { BookOpen } from "lucide-react";
 import "../styles.css";
 
+// Moved outside the component
 const gradingData = [
   { grade: "O", qualification: "Outstanding", marks: "90-100", gp: "10" },
   { grade: "A+", qualification: "Excellent", marks: "80-89", gp: "9" },
@@ -34,7 +35,7 @@ const GradingTable = () => {
               </tr>
             </thead>
             <tbody>
-              {gradingData.map((item) => (
+              {gradingData.map((item) => ( // This line will still work
                 <tr key={item.grade}>
                   <td className="grade-cell">{item.grade}</td>
                   <td>{item.qualification}</td>

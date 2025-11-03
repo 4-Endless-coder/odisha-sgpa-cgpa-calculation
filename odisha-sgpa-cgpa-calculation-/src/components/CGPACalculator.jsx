@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Plus, Trash2, TrendingUp } from "lucide-react";
 import "../styles.css";
+import { calculateCGPA, convertSGPAToPercentage } from "../lib/calculator"; // Import the logic
 
 const CGPACalculator = () => {
   const [semesters, setSemesters] = useState([
@@ -31,24 +32,9 @@ const CGPACalculator = () => {
     setSemesters(semesters.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
   };
 
-  const calculateCGPA = () => {
-    let totalCredits = 0;
-    let weightedSum = 0;
-
-    for (const semester of semesters) {
-      const sgpa = parseFloat(semester.sgpa);
-      const credits = parseFloat(semester.credits);
-
-      if (!isNaN(sgpa) && !isNaN(credits)) {
-        totalCredits += credits;
-        weightedSum += sgpa * credits;
-      }
-    }
-
-    if (totalCredits > 0) {
-      const cgpa = weightedSum / totalCredits;
-      setResult({ cgpa: parseFloat(cgpa.toFixed(2)), totalCredits });
-    }
+  const handleCalculate = () => {
+    const calcResult = calculateCGPA(semesters);
+    setResult(calcResult);
   };
 
   return (
@@ -121,7 +107,7 @@ const CGPACalculator = () => {
             <Plus className="icon-small" />
             Add Semester
           </button>
-          <button onClick={calculateCGPA} className="btn btn-primary">
+          <button onClick={handleCalculate} className="btn btn-primary"> {/* Updated this line */}
             <TrendingUp className="icon-small" />
             Calculate CGPA
           </button>
@@ -141,7 +127,7 @@ const CGPACalculator = () => {
             </div>
             <div className="result-footer">
               <p className="result-percentage">
-                Approximate Overall Percentage: <strong>{((result.cgpa - 0.75) * 10).toFixed(2)}%</strong>
+                Approximate Overall Percentage: <strong>{convertSGPAToPercentage(result.cgpa)}%</strong> {/* Updated this line */}
               </p>
             </div>
           </div>

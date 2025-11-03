@@ -1,17 +1,9 @@
 import { useState } from "react";
 import { Plus, Trash2, Calculator } from "lucide-react";
 import "../styles.css";
+import { calculateSGPA } from "../lib/calculator"; // Import the logic
 
-const gradePoints = {
-  O: 10,
-  "A+": 9,
-  A: 8,
-  "B+": 7,
-  B: 6,
-  C: 5,
-  D: 4,
-  F: 0,
-};
+// gradePoints constant is now removed from here
 
 const SGPACalculator = () => {
   const [subjects, setSubjects] = useState([
@@ -33,24 +25,10 @@ const SGPACalculator = () => {
     setSubjects(subjects.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
   };
 
-  const calculateSGPA = () => {
-    let totalCredits = 0;
-    let totalCP = 0;
-
-    for (const subject of subjects) {
-      const credit = parseFloat(subject.credit);
-      const gp = gradePoints[subject.grade];
-
-      if (!isNaN(credit) && gp !== undefined) {
-        totalCredits += credit;
-        totalCP += credit * gp;
-      }
-    }
-
-    if (totalCredits > 0) {
-      const sgpa = totalCP / totalCredits;
-      setResult({ sgpa: parseFloat(sgpa.toFixed(2)), totalCredits, totalCP });
-    }
+  // Renamed to handleCalculate, it now only calls the logic
+  const handleCalculate = () => {
+    const calcResult = calculateSGPA(subjects);
+    setResult(calcResult);
   };
 
   return (
@@ -130,7 +108,7 @@ const SGPACalculator = () => {
             <Plus className="icon-small" />
             Add Subject
           </button>
-          <button onClick={calculateSGPA} className="btn btn-primary">
+          <button onClick={handleCalculate} className="btn btn-primary"> {/* Updated this line */}
             <Calculator className="icon-small" />
             Calculate SGPA
           </button>
@@ -153,8 +131,9 @@ const SGPACalculator = () => {
               </div>
             </div>
             <div className="result-footer">
+              {/* Using the imported function here as well for consistency */}
               <p className="result-percentage">
-                Approximate Percentage: <strong>{((result.sgpa - 0.75) * 10).toFixed(2)}%</strong>
+                Approximate Percentage: <strong>{convertSGPAToPercentage(result.sgpa)}%</strong>
               </p>
             </div>
           </div>

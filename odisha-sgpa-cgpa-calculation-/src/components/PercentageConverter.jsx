@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { ArrowRightLeft, Percent, Calculator } from "lucide-react";
 import "../styles.css";
+// Import all the new functions
+import { 
+  convertSGPAToPercentage, 
+  convertMarksToGrade, 
+  convertSGPAToTotalMarks 
+} from "../lib/calculator";
 
 const PercentageConverter = () => {
   const [activeConversionTab, setActiveConversionTab] = useState("sgpa-to-percent");
@@ -12,60 +18,22 @@ const PercentageConverter = () => {
   const [gradeResult, setGradeResult] = useState(null);
   const [totalMarksResult, setTotalMarksResult] = useState(null);
 
-  const convertSGPAToPercentage = () => {
-    const sgpaValue = parseFloat(sgpa);
-    if (!isNaN(sgpaValue) && sgpaValue >= 0 && sgpaValue <= 10) {
-      const result = (sgpaValue - 0.75) * 10;
-      setPercentageResult(parseFloat(result.toFixed(2)));
-    }
+  // Updated to use the imported function
+  const handleSGPAToPercentage = () => {
+    const result = convertSGPAToPercentage(sgpa);
+    setPercentageResult(result);
   };
 
-  const convertMarksToGrade = () => {
-    const marksValue = parseFloat(marks);
-    if (isNaN(marksValue) || marksValue < 0 || marksValue > 100) {
-      return;
-    }
-
-    let grade = "";
-    let gp = 0;
-
-    if (marksValue >= 90) {
-      grade = "O";
-      gp = 10;
-    } else if (marksValue >= 80) {
-      grade = "A+";
-      gp = 9;
-    } else if (marksValue >= 70) {
-      grade = "A";
-      gp = 8;
-    } else if (marksValue >= 60) {
-      grade = "B+";
-      gp = 7;
-    } else if (marksValue >= 50) {
-      grade = "B";
-      gp = 6;
-    } else if (marksValue >= 45) {
-      grade = "C";
-      gp = 5;
-    } else if (marksValue >= 40) {
-      grade = "D";
-      gp = 4;
-    } else {
-      grade = "F";
-      gp = 0;
-    }
-
-    setGradeResult({ grade, gp });
+  // Updated to use the imported function
+  const handleMarksToGrade = () => {
+    const result = convertMarksToGrade(marks);
+    setGradeResult(result);
   };
 
-  const convertSGPAToTotalMarks = () => {
-    const sgpaValue = parseFloat(sgpaForMarks);
-    const maxMarksValue = parseFloat(maxMarks);
-    if (!isNaN(sgpaValue) && sgpaValue >= 0 && sgpaValue <= 10 && !isNaN(maxMarksValue) && maxMarksValue > 0) {
-      const percentage = (sgpaValue - 0.75) * 10;
-      const totalMarks = (percentage / 100) * maxMarksValue;
-      setTotalMarksResult(parseFloat(totalMarks.toFixed(2)));
-    }
+  // Updated to use the imported function
+  const handleSGPAToTotalMarks = () => {
+    const result = convertSGPAToTotalMarks(sgpaForMarks, maxMarks);
+    setTotalMarksResult(result);
   };
 
   return (
@@ -117,7 +85,7 @@ const PercentageConverter = () => {
                     onChange={(e) => setSgpa(e.target.value)}
                   />
                 </div>
-                <button onClick={convertSGPAToPercentage} className="btn btn-primary btn-full">
+                <button onClick={handleSGPAToPercentage} className="btn btn-primary btn-full"> {/* Updated this line */}
                   <Percent className="icon-small" />
                   Convert to Percentage
                 </button>
@@ -159,7 +127,7 @@ const PercentageConverter = () => {
                     onChange={(e) => setMaxMarks(e.target.value)}
                   />
                 </div>
-                <button onClick={convertSGPAToTotalMarks} className="btn btn-primary btn-full">
+                <button onClick={handleSGPAToTotalMarks} className="btn btn-primary btn-full"> {/* Updated this line */}
                   <Calculator className="icon-small" />
                   Convert to Total Marks
                 </button>
@@ -188,7 +156,7 @@ const PercentageConverter = () => {
                     onChange={(e) => setMarks(e.target.value)}
                   />
                 </div>
-                <button onClick={convertMarksToGrade} className="btn btn-primary btn-full">
+                <button onClick={handleMarksToGrade} className="btn btn-primary btn-full"> {/* Updated this line */}
                   <ArrowRightLeft className="icon-small" />
                   Convert to Grade
                 </button>
