@@ -5,11 +5,9 @@ import "../styles.css";
 const PercentageConverter = () => {
   const [activeConversionTab, setActiveConversionTab] = useState("sgpa-to-percent");
   const [sgpa, setSgpa] = useState("");
-  const [percentage, setPercentage] = useState("");
   const [marks, setMarks] = useState("");
   const [sgpaForMarks, setSgpaForMarks] = useState("");
   const [maxMarks, setMaxMarks] = useState("");
-  const [sgpaResult, setSgpaResult] = useState(null);
   const [percentageResult, setPercentageResult] = useState(null);
   const [gradeResult, setGradeResult] = useState(null);
   const [totalMarksResult, setTotalMarksResult] = useState(null);
@@ -19,14 +17,6 @@ const PercentageConverter = () => {
     if (!isNaN(sgpaValue) && sgpaValue >= 0 && sgpaValue <= 10) {
       const result = (sgpaValue - 0.75) * 10;
       setPercentageResult(parseFloat(result.toFixed(2)));
-    }
-  };
-
-  const convertPercentageToSGPA = () => {
-    const percentValue = parseFloat(percentage);
-    if (!isNaN(percentValue) && percentValue >= 0 && percentValue <= 100) {
-      const result = percentValue / 10 + 0.75;
-      setSgpaResult(parseFloat(result.toFixed(2)));
     }
   };
 
@@ -97,12 +87,6 @@ const PercentageConverter = () => {
               SGPA → %
             </button>
             <button 
-              className={`conversion-tab ${activeConversionTab === 'percent-to-sgpa' ? 'active' : ''}`}
-              onClick={() => setActiveConversionTab('percent-to-sgpa')}
-            >
-              % → SGPA
-            </button>
-            <button 
               className={`conversion-tab ${activeConversionTab === 'sgpa-to-marks' ? 'active' : ''}`}
               onClick={() => setActiveConversionTab('sgpa-to-marks')}
             >
@@ -141,35 +125,6 @@ const PercentageConverter = () => {
                   <div className="result-card conversion-result">
                     <p className="result-label">Percentage</p>
                     <p className="result-value result-large">{percentageResult}%</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeConversionTab === 'percent-to-sgpa' && (
-              <div className="conversion-panel">
-                <div className="form-group">
-                  <label htmlFor="percentage-input" className="label">
-                    Enter Percentage (0-100)
-                  </label>
-                  <input
-                    id="percentage-input"
-                    type="number"
-                    step="0.01"
-                    className="input"
-                    placeholder="65.90"
-                    value={percentage}
-                    onChange={(e) => setPercentage(e.target.value)}
-                  />
-                </div>
-                <button onClick={convertPercentageToSGPA} className="btn btn-primary btn-full">
-                  <Calculator className="icon-small" />
-                  Convert to SGPA
-                </button>
-                {sgpaResult !== null && (
-                  <div className="result-card conversion-result">
-                    <p className="result-label">SGPA</p>
-                    <p className="result-value result-large">{sgpaResult}</p>
                   </div>
                 )}
               </div>
